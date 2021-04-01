@@ -36,7 +36,31 @@ public class AccountService {
     }
     public boolean forgotPassword(String email,String path)
     {
+        UserDB userDB = new UserDB();
         boolean isTrue=false;
+        //how to get password?
+        String password=null;
+        try {
+            User user = userDB.get(email);
+            if (password.equals(user.getPassword())) {
+                Logger.getLogger(AccountService.class.getName()).log(Level.INFO, "Successful email by {0}", email);
+                
+                String to = user.getEmail();
+                String subject = "Notes App Login";
+                String template = path + "/emailtemplates/forgotEmail.html";
+                
+                HashMap<String, String> tags = new HashMap<>();
+                tags.put("firstname", user.getFirstName());
+                tags.put("lastname", user.getLastName());
+                tags.put("date", (new java.util.Date()).toString());
+                
+                GmailService.sendMail(to, subject, template, tags);
+                isTrue=true;
+                return isTrue;
+            }
+        } catch (Exception e) {
+        }
+        
         return isTrue;
     }
 }
