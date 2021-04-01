@@ -34,4 +34,9 @@ public class AccountService {
         
         return null;
     }
+    public boolean forgotPassword(String email,String path)
+    {
+        boolean isTrue=false;
+        return isTrue;
+    }
 }
