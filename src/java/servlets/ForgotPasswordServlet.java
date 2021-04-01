@@ -31,10 +31,11 @@ public class ForgotPasswordServlet extends HttpServlet {
         AccountService as=new AccountService();
         //ask?
         String email=request.getParameter("forgotEmail");
-        String path="/WEB-INF//emailtemplates/login.html";
+        String path="/WEB-INF//emailtemplates/forgotEmail.html";
         boolean isTrue=as.forgotPassword(email, path);
         if(isTrue==true)
         {
+            request.setAttribute("extra", "if the address you entered is valid,you will receive an email very soon.please check your  email for your password.");
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         }
         else
